@@ -30,7 +30,5 @@ data = data.drop(columns=['answers'])
 
 data = prep.get_data_with_spans(data)
 
-# data = prep.preprocess_data(data)
-
 with open(args.output_data_path, 'wb') as file:
     pickle.dump(data, file)

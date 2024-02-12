@@ -1,8 +1,3 @@
-# import string
-# import re
-# import contractions
-
-
 def insert_spans(text, answer_start_num, suggested_answer):
     
     try: 
@@ -27,22 +22,3 @@ def get_data_with_spans(data):
     data.answer_start += 3
      
     return data
-
-
-# def preprocess_text(text):
-    
-#     text = re.sub(r"[{}]".format(string.punctuation), '', text)
-#     text = text.lower()
-    
-#     return text
-
-
-# def preprocess_data(data):
-    
-#     for column in data.columns:
-#         if column not in ['answer', 'answer_start']:
-#             data[column] = data[column].apply(lambda text: preprocess_text(text))
-#         elif column == 'answer':
-#             data[column] = data[column].apply(lambda text: text.lower())
-            
-#     return data
