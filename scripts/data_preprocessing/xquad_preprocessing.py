@@ -1,6 +1,5 @@
 import argparse
 import pandas as pd
-import pickle
 from pathlib import Path
 from importlib import machinery, util
 loader = machinery.SourceFileLoader('preprocessing.py', 
@@ -30,5 +29,4 @@ data = data.drop(columns=['answers'])
 
 data = prep.get_data_with_spans(data)
 
-with open(args.output_data_path, 'wb') as file:
-    pickle.dump(data, file)
+data.to_json(args.output_data_path, orient='records', lines=True)
