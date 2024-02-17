@@ -7,7 +7,7 @@ def insert_spans(text, answer_start_num, suggested_answer):
         if text[answer_start_num:answer_end_num] == \
             suggested_answer:
             text = text[:answer_start_num] + \
-                    '<a>' + suggested_answer + '</a>' + \
+                    '[' + suggested_answer + ']' + \
                     text[answer_end_num:]
                     
     return text
