@@ -3,3 +3,6 @@ data/
 data_loading/
 notebooks/
 __pycache__
+scripts/translation/old_translation.py
+scripts/translation/old_sh_translation.sh
+scripts/translation/easy_project_translation_UPD.py
