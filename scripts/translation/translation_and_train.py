@@ -18,11 +18,12 @@ Fine-tuning the library models for sequence to sequence.
 """
 # You can also adapt this script on your own sequence to sequence task. Pointers for this are left as comments.
 
+from pathlib import Path
 import re
 import logging
 import os
-os.environ["TRANSFORMERS_CACHE"] = "/srv/share5/hf_cache/"
-os.environ["HF_DATASETS_CACHE"] = "/srv/share5/hf_cache"
+os.environ["TRANSFORMERS_CACHE"] = str(Path.cwd() / "hf_cache")
+os.environ["HF_DATASETS_CACHE"] = str(Path.cwd() / "hf_cache")
 import sys
 from dataclasses import dataclass, field
 from typing import Optional
@@ -257,15 +258,6 @@ def main():
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
-    if training_args.do_train:
-        column_names = raw_datasets["train.0"].column_names
-    elif training_args.do_eval:
-        column_names = raw_datasets["validation"].column_names
-    elif training_args.do_predict:
-        column_names = raw_datasets["test"].column_names
-    else:
-        logger.info("There is nothing to do. Please pass `do_train`, `do_eval` and/or `do_predict`.")
-
     # Sending telemetry. Tracking the example usage helps us better allocate resources to maintain them. The
     # information sent is the one passed as arguments along with your Python/PyTorch versions.
     send_example_telemetry("run_translation", model_args, data_args)
@@ -348,7 +340,16 @@ def main():
             cache_dir=model_args.cache_dir,
             use_auth_token=True if model_args.use_auth_token else None,
         )    
-        
+    
+    if training_args.do_train:
+        column_names = raw_datasets["train.0"].column_names
+    elif training_args.do_eval:
+        column_names = raw_datasets["validation"].column_names
+    elif training_args.do_predict:
+        column_names = raw_datasets["test"].column_names
+    else:
+        logger.info("There is nothing to do. Please pass `do_train`, `do_eval` and/or `do_predict`.")
+         
     config = AutoConfig.from_pretrained(
     model_args.config_name if model_args.config_name else model_args.model_name_or_path,
     cache_dir=model_args.cache_dir,
@@ -402,7 +403,6 @@ def main():
         inputs = [ex["src_txt"] for ex in examples["translation"]]
         inputs_by_sent = [[f'{sent}.' for sent in example.split('. ') if len(sent) > 0] for example in inputs]
         inputs_by_sent =  [[sent[:-1] if sent[-2:]=='..' else sent for sent in input] for input in inputs_by_sent]
-        num_sent_in_inputs = [len(example) for example in inputs_by_sent]
         inputs_by_sent_cons = [sent for sub_list in inputs_by_sent for sent in sub_list]
         inputs = [prefix + inp for inp in inputs_by_sent_cons]
 
@@ -524,6 +524,8 @@ def main():
         preds, labels = eval_preds
         if isinstance(preds, tuple):
             preds = preds[0]
+            
+        preds = np.where(preds != -100, preds, tokenizer.pad_token_id)
         decoded_preds = tokenizer.batch_decode(preds, skip_special_tokens=True)
         if data_args.ignore_pad_token_for_loss:
             # Replace -100 in the labels as we can't decode them.
@@ -617,8 +619,9 @@ def main():
 
         if trainer.is_world_process_zero():
             if training_args.predict_with_generate:
+                predictions = [[pred for pred in pred_sent if pred != -100] for pred_sent in predict_results.predictions]
                 predictions = tokenizer.batch_decode(
-                    predict_results.predictions, skip_special_tokens=True, clean_up_tokenization_spaces=True
+                    predictions, skip_special_tokens=True, clean_up_tokenization_spaces=True
                 )
                 predictions = [pred.strip() for pred in predictions]
                 predictions = merge_sent(predictions, num_sent_in_inputs)
@@ -627,28 +630,21 @@ def main():
                 num_predictions = len(predictions)
                 projection_rate = num_projections/num_predictions
                 
-                if training_args.do_train and training_args.output_dir:    
-                    output_prediction_file = os.path.join(training_args.output_dir, "generated_predictions.txt")
-                    
-                elif data_args.val_file and re.findall('prepared', data_args.val_file):
-                    output_prediction_file = os.path.join(re.sub('prepared', 'validate', data_args.val_file), 
-                                                          "generated_predictions.txt")                
-                    output_projection_data_file = os.path.join(re.sub('prepared', 'validate', data_args.val_file),
-                                                               'projection_data.txt')
-                    
-                elif data_args.test_file and re.findall('prepared', data_args.test_file):
-                    output_prediction_file = os.path.join(re.sub('prepared', 'translated', data_args.test_file), 
-                                                          "generated_predictions.txt")    
-                    output_projection_data_file = os.path.join(re.sub('prepared', 'translated', data_args.val_file),
-                                                               'projection_data.txt')
-                    
-                with open(output_prediction_file, "w", encoding="utf-8") as writer:
-                    writer.write("\n".join(predictions))              
-                with open(output_projection_data_file, 'w', encoding="utf-8") as writer:
-                    writer.write(f'num_projections: {num_projections}')
-                    writer.write(f'num_predictions: {num_predictions}')
-                    writer.write(f'projection_rate: {projection_rate}')
+                path = Path(training_args.output_dir)
+                path.mkdir(parents=True, exist_ok=True)
+                output_prediction_file = os.path.join(training_args.output_dir, "generated_predictions.txt")
                 
+                with open(output_prediction_file, "w", encoding="utf-8") as writer:
+                    writer.write("\n".join(predictions))
+                    
+                if training_args.predict_with_generate and (training_args.do_predict or training_args.do_eval):
+                    output_projection_data_file = os.path.join(training_args.output_dir, 'projection_data.txt')
+                    
+                    with open(output_projection_data_file, 'w', encoding="utf-8") as writer:
+                        writer.write(f'num_projections: {num_projections}'+'\n')
+                        writer.write(f'num_predictions: {num_predictions}'+'\n')
+                        writer.write(f'projection_rate: {round(projection_rate * 100, 2)}')              
+  
     kwargs = {"finetuned_from": model_args.model_name_or_path, "tasks": "translation"}
     if data_args.dataset_name is not None:
         kwargs["dataset_tags"] = data_args.dataset_name
