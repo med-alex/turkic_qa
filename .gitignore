@@ -4,5 +4,5 @@ data_loading/
 notebooks/
 __pycache__
 scripts/translation/else/
-scripts/translation/prepared_data/
+scripts/translation/translation_prep_data/
 scripts/translation/translated_data/
