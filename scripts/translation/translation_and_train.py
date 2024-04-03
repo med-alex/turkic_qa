@@ -401,14 +401,14 @@ def main():
         tokenizer.tgt_lang = tgt_lang
         
         inputs = [ex["src_txt"] for ex in examples["translation"]]
-        inputs_by_sent = [[f'{sent}.' for sent in example.split('. ') if len(sent) > 0] for example in inputs]
+        inputs_by_sent = [[f'{sent}.' for sent in re.split('\.\s+', example) if len(sent) > 0] for example in inputs]
         inputs_by_sent =  [[sent[:-1] if sent[-2:]=='..' else sent for sent in input] for input in inputs_by_sent]
         inputs_by_sent_cons = [sent for sub_list in inputs_by_sent for sent in sub_list]
         inputs = [prefix + inp for inp in inputs_by_sent_cons]
 
         targets = [ex["tgt_txt"] for ex in examples["translation"]]
         if len(''.join(targets)) > 0:
-            targets_by_sent = [[sent if sent[-1] == '.' else f'{sent}.' for sent in example.split('. ')]
+            targets_by_sent = [[sent if sent[-1] == '.' else f'{sent}.' for sent in re.split('\.\s+', example)]
                                 for example in targets]
             targets = [sent for sub_list in targets_by_sent for sent in sub_list]
 
@@ -434,7 +434,7 @@ def main():
     def find_num_sent_in_inputs(examples):
 
         inputs = [ex["src_txt"] for ex in examples["translation"]]
-        inputs_by_sent = [[f'{sent}.' for sent in example.split('. ') if len(sent) > 0] for example in inputs]
+        inputs_by_sent = [[f'{sent}.' for sent in re.split('\.\s+', example) if len(sent) > 0] for example in inputs]
         inputs_by_sent =  [[sent[:-1] if sent[-2:]=='..' else sent for sent in input] for input in inputs_by_sent]
         num_sent_in_inputs = [len(example) for example in inputs_by_sent]
 
