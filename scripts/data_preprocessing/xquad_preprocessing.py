@@ -29,4 +29,4 @@ data = data.drop(columns=['answers'])
 
 data = prep.get_data_with_spans(data, '[', ']')
 
-data.to_json(args.output_data_path, orient='records', lines=True)
+data.to_json(args.output_data_path, orient='records', lines=True, force_ascii=False)
