@@ -47,4 +47,4 @@ for i in full_data.index:
 
 full_data = prep.get_data_with_spans(full_data, '[', ']')
 
-full_data.to_json(args.output_data_path, orient='records', lines=True)
+full_data.to_json(args.output_data_path, orient='records', lines=True, force_ascii=False)
