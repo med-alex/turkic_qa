@@ -37,4 +37,4 @@ for target_language_tag in args.target_langs_tags.split(','):
         path = Path(args.output_dir_path) / Path(args.input_data_path).stem / target_language_tag / f'{column}s'
         path.mkdir(parents=True, exist_ok=True)
         
-        pd.DataFrame(data_column).to_json(f'{str(path)}/data.json', orient='records', lines=True)
+        pd.DataFrame(data_column).to_json(f'{str(path)}/data.json', orient='records', lines=True, force_ascii=False)

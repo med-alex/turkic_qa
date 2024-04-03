@@ -22,4 +22,4 @@ output_path = Path(args.output_dir_path)
 output_path.mkdir(parents=True, exist_ok=True)
 
 full_data.to_json(output_path / f'{Path(args.input_dir_path).parents[0].stem}_{Path(args.input_dir_path).stem}.json', 
-                  orient='records', lines=True)
+                  orient='records', lines=True, force_ascii=False)
