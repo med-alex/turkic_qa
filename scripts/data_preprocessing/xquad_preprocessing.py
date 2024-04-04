@@ -27,6 +27,7 @@ data['answer_start'] = data.answers.apply(lambda answers: \
 
 data = data.drop(columns=['answers'])
 
+data = prep.handle_json_quote_issue(data)
 data = prep.get_data_with_spans(data, '[', ']')
 
 data.to_json(args.output_data_path, orient='records', lines=True, force_ascii=False)

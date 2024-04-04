@@ -44,7 +44,8 @@ for i in full_data.index:
     if full_data.loc[i, 'answer'][0] == ' ':
         full_data.loc[i, 'answer'] = full_data.loc[i, 'answer'].lstrip()
         full_data.loc[i, 'answer_start'] -= 1
-
+        
+full_data = prep.handle_json_quote_issue(full_data)
 full_data = prep.get_data_with_spans(full_data, '[', ']')
 
 full_data.to_json(args.output_data_path, orient='records', lines=True, force_ascii=False)
