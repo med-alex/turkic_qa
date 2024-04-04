@@ -32,7 +32,10 @@ def replace_double_quote(text):
             text = re.sub('"', '«', text, count=1)
         elif quote_num % 2 != 0:
             text = re.sub('"', '»', text, count=1)
-
+    
+    text = re.sub('« ', '«', text)
+    text = re.sub(' »', '»', text)
+    
     return text
 
 
