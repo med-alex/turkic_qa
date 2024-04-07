@@ -1,4 +1,6 @@
 import re
+from difflib import SequenceMatcher
+
 
 def insert_spans(text, answer_start_num, suggested_answer, span_left, span_right):
     
@@ -21,20 +23,30 @@ def get_data_with_spans(data, span_left, span_right):
                                                         span_right),
                                             axis=1)
     data.answer_start += len(span_left)
-     
+    
+    for i in data.index:
+        if not re.findall('\[.+\]', data.loc[i].context) \
+            or re.sub('\[|\]', '', re.findall('\[.+\]', data.loc[i].context)[0]) != data.loc[i].answer:
+            raise BaseException(f"In row {i} answer spans don't inserted or inserted in a wrong way")
+
     return data
 
 
-def replace_double_quote(text):
+def replace_single_quote(text):
     
-    for quote_num, quote in enumerate(re.findall('"', text)):
-        if quote_num % 2 == 0:
-            text = re.sub('"', '«', text, count=1)
-        elif quote_num % 2 != 0:
-            text = re.sub('"', '»', text, count=1)
-    
-    text = re.sub('« ', '«', text)
-    text = re.sub(' »', '»', text)
+    for sep_simbol in ['.', ',', ':', ';', '?']:
+        correct_text = []
+        for text_split in text.split(sep_simbol):
+            text_split = text_split.replace("'", '’')
+            text_split = text_split.replace(' ’', ' "')
+            text_split = text_split.replace('’ ', '" ')
+            if len(text_split) > 0:
+                if text_split[0] == '’':
+                    text_split = f'"{text_split[1:]}'
+                if text_split[-1] == '’':
+                    text_split = f'{text_split[:-1]}"'
+            correct_text += [text_split]
+        text = f'{sep_simbol}'.join(correct_text)
     
     return text
 
@@ -42,6 +54,149 @@ def replace_double_quote(text):
 def handle_json_quote_issue(data):
 
     for column in data.columns:
-        data[column] = data[column].apply(lambda text: replace_double_quote(text) if isinstance(text, str) else text)  
+        data[column] = data[column].apply(lambda text: replace_single_quote(text) if isinstance(text, str) else text)
 
     return data
+
+
+def get_rid_of_single_quote_in_answers(answer):
+    
+    possible_quotes = ['’', '"']
+    for quote in possible_quotes:
+        if (answer[0] == quote or answer[-1] == quote) \
+            and answer.count(quote) % 2 != 0:
+            if answer[0] == quote:
+                answer = answer[1:]
+            elif answer[-1] == quote:
+                answer = answer[:-1]
+        
+    return answer
+
+
+def delete_unmatched_brackets(text):
+    
+    for brakets_pair in ['()', '[]', '{}']:
+        correct_sent = []
+        for sub_sent_num, sub_sent in enumerate(re.split(f'\{brakets_pair[0]}', text)):
+            if sub_sent_num == 0:
+                correct_sent += re.sub(f'\{brakets_pair[1]}', '', sub_sent)
+            elif re.findall(f'\{brakets_pair[1]}', sub_sent):
+                correct_sent += f'{brakets_pair[0]}{sub_sent}'
+            else:
+                correct_sent += sub_sent
+        text = ''.join(correct_sent)
+    
+    return text
+
+
+def change_square_brackets_on_reqular(text):
+    
+    text = text.replace('[', '(')
+    text = text.replace(']', ')')
+    
+    return text
+
+
+def get_rid_of_special_characters(text):
+    
+    text = re.sub('\\r\\n', ' ', text)        
+    
+    return text
+
+
+def get_rid_of_unnessesary_extra_spaces(text):
+    
+    sep_simbols = ['\.', ',', ';', ':']
+    for sep_simbol in sep_simbols:
+        pattern = '\s+' + sep_simbol + '\s+'
+        findings = re.findall(pattern, text)
+        for f in findings:
+            simbol = sep_simbol if sep_simbol != '\.' else '.'
+            text = re.sub(pattern, f'{simbol} ', text)
+    
+    return text
+
+
+def insert_nessesary_extra_spaces(text):
+
+    for f in re.findall('\S+\s+-[\S][^\d]|\S+-\s+\S+', text):
+        found_start = text.find(f)
+        input_changing_fild = text[found_start:found_start + len(f)]
+        output_changing_fild = ' - '.join([split_part.strip() for split_part in re.split('-', input_changing_fild)])
+        text = text.replace(input_changing_fild, output_changing_fild, 1)
+
+    return text
+
+
+def split_sentence(text):
+
+    sep_simbols = ['\.', ',', ';', ':']
+    for sep_simbol in sep_simbols:
+        pattern = '[^\s\.,]{3,}' + sep_simbol + '[^\d\s\.,]{1,}'
+        findings = re.findall(pattern, text)
+        for f in findings:
+            found_start = text.find(f)
+            input_changing_fild = text[found_start:found_start + len(f)]
+            split_simbol = sep_simbol if sep_simbol != '\.' else f'\d*{sep_simbol}'
+            join_simbol = sep_simbol if sep_simbol != '\.' else '.'
+            output_changing_fild = f'{join_simbol} '.join(re.split(split_simbol, input_changing_fild))
+            text = text.replace(input_changing_fild, output_changing_fild, 1)
+            
+    return text
+
+
+def get_rid_of_unnesesary_numbers_at_the_end(text):
+    
+    pattern = '[^\d\s.-]{3,}\d+\.'
+    findings = re.findall(pattern, text)
+    for f in findings:
+        found_start = text.find(f)
+        input_changing_fild = text[found_start:found_start + len(f)]
+        output_changing_fild = ''.join(re.split('\d+', input_changing_fild))
+        text = text.replace(input_changing_fild, output_changing_fild)
+        
+    return text
+
+
+def find_new_answer_start(data, new_context):
+    
+    split_sent = new_context.split(data.answer)
+    best_ratio = 0.
+    new_answer_start = 0
+    for sub_sent_num, sub_sent in enumerate(split_sent):
+        testing_str = f'{data.answer}'.join(split_sent[:sub_sent_num+1])
+        if len(testing_str) == 0:
+            testing_str = data.answer
+        match_ratio = SequenceMatcher(None, 
+                            data.context[:data.answer_start],
+                            testing_str).ratio()
+        if match_ratio > best_ratio:
+            best_ratio = match_ratio
+            new_answer_start = len(f'{data.answer}'.join(split_sent[:sub_sent_num+1]))
+
+    return new_answer_start
+
+
+def deal_with_sevral_text_issues(data):
+
+    new_data = data.copy()
+    for column in ['answer', 'context', 'question']:
+        for i in new_data.index:
+            text = new_data.loc[i, column]
+            if isinstance(text, str):
+                text = delete_unmatched_brackets(text)
+                text = change_square_brackets_on_reqular(text)
+                text = get_rid_of_special_characters(text)
+                text = get_rid_of_unnessesary_extra_spaces(text)
+                text = insert_nessesary_extra_spaces(text)
+                text = split_sentence(text)
+                text = get_rid_of_unnesesary_numbers_at_the_end(text)      
+                if column == 'answer':
+                    text = get_rid_of_single_quote_in_answers(text)
+                    
+                if column == 'context':
+                    new_data.loc[i, 'answer_start'] = find_new_answer_start(new_data.loc[i], text)
+                    
+                new_data.loc[i, column] = text
+                
+    return new_data

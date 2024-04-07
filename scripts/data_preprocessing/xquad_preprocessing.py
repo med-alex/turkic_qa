@@ -28,6 +28,11 @@ data['answer_start'] = data.answers.apply(lambda answers: \
 data = data.drop(columns=['answers'])
 
 data = prep.handle_json_quote_issue(data)
+for column in data.columns:
+    data[column] = data[column].apply(lambda text: prep.change_square_brackets_on_reqular(text) if isinstance(text, str) else text)
+for i in data.index:
+    if data.loc[i].context[data.loc[i].answer_start] != data.loc[i].answer:
+        data.loc[i, 'answer_start'] = prep.find_new_answer_start(data.loc[i], data.loc[i].context)
 data = prep.get_data_with_spans(data, '[', ']')
 
 data.to_json(args.output_data_path, orient='records', lines=True, force_ascii=False)
