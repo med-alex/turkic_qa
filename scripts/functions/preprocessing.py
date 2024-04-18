@@ -32,45 +32,13 @@ def get_data_with_spans(data, span_left, span_right):
     return data
 
 
-def replace_single_quote(text):
-    
-    for sep_simbol in ['.', ',', ':', ';', '?']:
-        correct_text = []
-        for text_split in text.split(sep_simbol):
-            text_split = text_split.replace("'", '’')
-            text_split = text_split.replace(' ’', ' "')
-            text_split = text_split.replace('’ ', '" ')
-            if len(text_split) > 0:
-                if text_split[0] == '’':
-                    text_split = f'"{text_split[1:]}'
-                if text_split[-1] == '’':
-                    text_split = f'{text_split[:-1]}"'
-            correct_text += [text_split]
-        text = f'{sep_simbol}'.join(correct_text)
-    
-    return text
-
 
 def handle_json_quote_issue(data):
 
     for column in data.columns:
-        data[column] = data[column].apply(lambda text: replace_single_quote(text) if isinstance(text, str) else text)
+        data[column] = data[column].apply(lambda text: text.replace('"', "'") if isinstance(text, str) else text)
 
     return data
-
-
-def get_rid_of_single_quote_in_answers(answer):
-    
-    possible_quotes = ['’', '"']
-    for quote in possible_quotes:
-        if (answer[0] == quote or answer[-1] == quote) \
-            and answer.count(quote) % 2 != 0:
-            if answer[0] == quote:
-                answer = answer[1:]
-            elif answer[-1] == quote:
-                answer = answer[:-1]
-        
-    return answer
 
 
 def delete_unmatched_brackets(text):
@@ -147,7 +115,7 @@ def split_sentence(text):
 
 def get_rid_of_unnesesary_numbers_at_the_end(text):
     
-    pattern = '[^\d\s.-]{3,}\d+\.'
+    pattern = '[^\d\s:;,.-]{3,}\d+\.'
     findings = re.findall(pattern, text)
     for f in findings:
         found_start = text.find(f)
@@ -190,10 +158,7 @@ def deal_with_sevral_text_issues(data):
                 text = get_rid_of_unnessesary_extra_spaces(text)
                 text = insert_nessesary_extra_spaces(text)
                 text = split_sentence(text)
-                text = get_rid_of_unnesesary_numbers_at_the_end(text)      
-                if column == 'answer':
-                    text = get_rid_of_single_quote_in_answers(text)
-                    
+                text = get_rid_of_unnesesary_numbers_at_the_end(text)                       
                 if column == 'context':
                     new_data.loc[i, 'answer_start'] = find_new_answer_start(new_data.loc[i], text)
                     

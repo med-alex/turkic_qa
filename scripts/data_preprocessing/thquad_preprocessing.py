@@ -22,7 +22,7 @@ questions = []
 answers = []
 answers_starts = []
 for i in data.index:
-    for paragraph in data.loc[i].values[0]['paragraphs']:
+    for paragraph in data.loc[i, 'data']['paragraphs']:
         questions += [qas['question'] for qas in paragraph['qas']]
         answers += [qas['answers'][0]['text'] for qas in paragraph['qas']]
         answers_starts += [int(qas['answers'][0]['answer_start']) for qas in paragraph['qas']]
