@@ -6,3 +6,4 @@ __pycache__
 scripts/translation/else/
 scripts/translation/translation_prep_data/
 scripts/translation/translated_data/
+*.ipynb
