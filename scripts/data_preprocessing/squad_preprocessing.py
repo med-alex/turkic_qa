@@ -13,12 +13,16 @@ parser.add_argument('--input_data_path', dest='input_data_path',
                     type=str, required=True)
 parser.add_argument('--output_data_path', dest='output_data_path', 
                     type=str, required=True)
+parser.add_argument('--path_to_xquad', dest='path_to_xquad', 
+                    type=str, required=True)
 parser.add_argument('--sample_size', dest='sample_size', 
                     type=int, required=False)
 args = parser.parse_args()
 
 data = pd.read_parquet(args.input_data_path)
+xquad_data = pd.read_parquet(args.path_to_xquad)
 
+data = data[~data.id.isin(xquad_data.id)]
 data = data.drop(columns=['id', 'title'])
 
 data['answer'] = data.answers.apply(lambda answer_info: answer_info['text'][0])

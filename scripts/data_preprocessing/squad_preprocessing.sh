@@ -9,6 +9,7 @@ then
     python scripts/data_preprocessing/squad_preprocessing.py \
         --input_data_path=/home/ml-srv-admin/Projects/turkic_qa/data/source_langs/raw/$input_file_name \
         --output_data_path=/home/ml-srv-admin/Projects/turkic_qa/data/source_langs/preprocessed/$output_file_name \
+        --path_to_xquad=/home/ml-srv-admin/Projects/turkic_qa/data/source_langs/raw/xquad_en.parquet \
         --sample_size=$sample_size
 else
     input_file_name=squad_$1_en.parquet
@@ -16,5 +17,6 @@ else
 
     python scripts/data_preprocessing/squad_preprocessing.py \
         --input_data_path=/home/ml-srv-admin/Projects/turkic_qa/data/source_langs/raw/$input_file_name \
-        --output_data_path=/home/ml-srv-admin/Projects/turkic_qa/data/source_langs/preprocessed/$output_file_name
+        --output_data_path=/home/ml-srv-admin/Projects/turkic_qa/data/source_langs/preprocessed/$output_file_name \
+        --path_to_xquad=/home/ml-srv-admin/Projects/turkic_qa/data/source_langs/raw/xquad_en.parquet
 fi
