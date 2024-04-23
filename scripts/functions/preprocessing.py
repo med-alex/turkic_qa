@@ -1,5 +1,6 @@
 import re
 from difflib import SequenceMatcher
+from nltk import ngrams
 
 
 def insert_spans(text, answer_start_num, suggested_answer, span_left, span_right):
@@ -165,3 +166,37 @@ def deal_with_sevral_text_issues(data):
                 new_data.loc[i, column] = text
                 
     return new_data
+
+
+def find_answer_in_contex(context, answer):
+
+    len_translated_answer_nqram = len(answer.split())
+
+    possible_answers_ngrams_length = [len_translated_answer_nqram + i for i in range(-2,3) \
+                                        if len_translated_answer_nqram + i > 0]
+
+    answers_by_ngrams = [[n_gram for n_gram in ngrams(context.split(), ngram_length)] \
+                            for ngram_length in possible_answers_ngrams_length]
+    possible_answers = [possible_answer for sub_list in answers_by_ngrams for possible_answer in sub_list]
+
+    best_ratio = 0
+    best_choice_ngram_length = 0
+    found_answer = ''
+    for possible_answer in possible_answers:
+        possible_answer = ' '.join(possible_answer)
+        match_ratio = SequenceMatcher(None,
+                                    possible_answer,
+                                    answer).ratio()
+        if match_ratio > best_ratio:
+            best_ratio = match_ratio
+            best_choice_ngram_length = len(possible_answer)
+            found_answer = possible_answer
+        elif match_ratio == best_ratio and len(possible_answer) < best_choice_ngram_length:
+            best_ratio = match_ratio
+            best_choice_ngram_length = len(possible_answer)
+            found_answer = possible_answer
+
+    if best_ratio >= 0.8:
+        context = insert_spans(context, context.find(found_answer), found_answer, '[', ']')
+    
+    return context
