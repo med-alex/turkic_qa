@@ -14,6 +14,8 @@ parser.add_argument('--input_data_path', dest='input_data_path',
                     type=str, required=True)
 parser.add_argument('--output_data_path', dest='output_data_path', 
                     type=str, required=True)
+parser.add_argument('--output_info_dir_path', dest='output_info_dir_path', 
+                    type=str, required=True)
 parser.add_argument('--first_file_sample_size', dest='first_file_sample_size', 
                     type=int, required=False)
 parser.add_argument('--second_output_data_path', dest='second_output_data_path', 
@@ -75,7 +77,7 @@ elif args.first_file_sample_size is not None \
 else:
     raise BaseException(f"Configuration of desired output files provided in a wrong way")
 
-info_path = Path('/home/ml-srv-admin/Projects/turkic_qa/data/target_lagns/preprocessed/preprocessing_info') / f'{Path(args.input_data_path).stem}.txt'
+info_path = Path(args.output_info_dir_path) / f'{Path(args.input_data_path).stem}.txt'
 with open(info_path, 'w', encoding="utf-8") as writer:
     writer.write(f'initial_num_rows: {initial_data_len}'+'\n')
     writer.write(f'initial_num_rows_with_brackets: {len(initial_data_with_brackets.index)}'+'\n')
