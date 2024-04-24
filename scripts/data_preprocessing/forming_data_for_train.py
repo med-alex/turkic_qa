@@ -33,7 +33,7 @@ for source_lang in ['en', 'tr', 'ru']:
                         merging_files_paths += [str(Path(args.input_dir_path) / filename)]
          
             for file_path in merging_files_paths:
-                data = pd.concat([data, pd.read_pickle(file_path)], ignore_index=True, axis=1)
+                data = pd.concat([data, pd.read_pickle(file_path)], ignore_index=True, axis=0)
             
             data = data.sample(frac=1)
             data.to_pickle(Path(args.output_dir_path) / f'{source_lang}_{target_lang}_{split}.pickle')
