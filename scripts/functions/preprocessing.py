@@ -168,7 +168,7 @@ def deal_with_sevral_text_issues(data):
     return new_data
 
 
-def find_answer_in_contex(context, answer):
+def find_answer_from_translated_answer(context, answer):
 
     len_translated_answer_nqram = len(answer.split())
 
@@ -196,7 +196,32 @@ def find_answer_in_contex(context, answer):
             best_choice_ngram_length = len(possible_answer)
             found_answer = possible_answer
 
-    if best_ratio >= 0.8:
-        context = insert_spans(context, context.find(found_answer), found_answer, '[', ']')
+    if best_ratio >= 0.8 and len(re.findall(re.escape(found_answer), context.replace('[', '').replace(']', ''))) == 1:
+        context = insert_spans(context.replace('[', '').replace(']', ''), context.find(found_answer), found_answer, '[', ']')
+    else:
+        context = context.replace('[', '').replace(']', '')
+        
+    return context
+
+
+def find_answer_from_context(context, answer):
+    
+    best_ratio = 0
+    found_answer = ''
+    for context_part in re.split('\[', context):
+        if re.findall('\]', context_part):
+            possible_answer = re.split('\]', context_part)[0]
+            
+            match_ratio = SequenceMatcher(None,
+                            possible_answer,
+                            answer).ratio()
+            if match_ratio > best_ratio:
+                best_ratio = match_ratio
+                found_answer = possible_answer
+            
+            if best_ratio >= 0.8 and len(re.findall(re.escape(found_answer), context.replace('[', '').replace(']', ''))) == 1:
+                context = insert_spans(context.replace('[', '').replace(']', ''), context.find(found_answer), found_answer, '[', ']')
+            else:
+                context = context.replace('[', '').replace(']', '')
     
     return context
