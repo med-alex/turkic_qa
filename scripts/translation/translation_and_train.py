@@ -207,6 +207,14 @@ class DataTrainingArguments:
             )
         },
     )
+    length_penalty: Optional[float] = field(
+        default=1.0,
+        metadata={
+            "help": (
+                "Length penalty for generation."
+            )
+        },
+    )
     ignore_pad_token_for_loss: bool = field(
         default=True,
         metadata={
@@ -606,7 +614,8 @@ def main():
         logger.info("*** Predict ***")
 
         predict_results = trainer.predict(
-            predict_dataset, metric_key_prefix="predict", max_length=max_length, num_beams=num_beams
+            predict_dataset, metric_key_prefix="predict", max_length=max_length, 
+            num_beams=num_beams, length_penalty=data_args.length_penalty
         )
         metrics = predict_results.metrics
         max_predict_samples = (
