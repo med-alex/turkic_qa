@@ -22,12 +22,10 @@ args = parser.parse_args()
 
 data = pd.read_json(args.input_data_path, lines=True)
 
-if (Path(args.input_data_path).stem.split('_')[-1] != 'en' 
-        and args.source_lang_tag == 'eng_Latn') \
-    or (Path(args.input_data_path).stem.split('_')[-1] != 'ru' 
-        and args.source_lang_tag == 'rus_Cyrl') \
-    or (Path(args.input_data_path).stem.split('_')[-1] != 'tr' 
-        and args.source_lang_tag == 'tur_Latn'):
+name_split = Path(args.input_data_path).stem.split('_')
+if (name_split[-1] != 'en' and name_split[-2] != 'en' and args.source_lang_tag == 'eng_Latn') \
+    or (name_split[-1] != 'ru' and name_split[-2] != 'ru' and args.source_lang_tag == 'rus_Cyrl') \
+    or (name_split[-1] != 'tr' and name_split[-2] != 'tr' and args.source_lang_tag == 'tur_Latn'):
     raise ValueError(f"Specified source language: {args.source_lang_tag} and sorce language dataset: {args.input_data_path} don't match")
 
 for target_language_tag in args.target_langs_tags.split(','):
