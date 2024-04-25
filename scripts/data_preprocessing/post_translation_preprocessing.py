@@ -1,5 +1,6 @@
 import argparse
 import pandas as pd
+import numpy as np
 from pathlib import Path
 import re
 from importlib import machinery, util
@@ -54,6 +55,10 @@ data.context = data.context.apply(lambda text: text.replace('[', '').replace(']'
 data.question = data.question.apply(lambda text: text[:-1] if text[-2:] == '?.' else text)
 data.question = data.question.apply(lambda text: f"{text.replace('?', '')}?" \
                                         if re.findall('\?', text) and text[-1] != '?' else text)
+data['answers'] = data.apply(lambda data: {'text': np.array([data.answer], dtype=object), 'answer_start': np.array([data.answer_start], dtype=np.int32)}, 
+                             axis=1)
+data['id'] = data.index
+data = data.drop(columns=['answer', 'answer_start'])
 
 if args.first_file_sample_size is not None \
     and args.second_output_data_path is not None \
