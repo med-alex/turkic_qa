@@ -21,7 +21,7 @@ then
     
 elif [ ! -z $4 ]
 then
-    first_file_sample_size=$3.pickle
+    first_file_sample_size=$3
     second_output_file_name=$4.pickle
 
     python /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.py \

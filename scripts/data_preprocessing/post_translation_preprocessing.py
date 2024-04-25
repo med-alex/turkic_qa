@@ -60,8 +60,8 @@ data['answers'] = data.apply(lambda data: {'text': np.array([data.answer], dtype
 data['id'] = data.index
 data = data.drop(columns=['answer', 'answer_start'])
 
-if args.first_file_sample_size is not None \
-    and args.second_output_data_path is not None \
+if args.output_data_path is not None and args.first_file_sample_size is not None \
+    and args.second_output_data_path is not None and args.second_file_sample_size is not None \
     and args.third_output_data_path is not None:
     
     first_file_data = data[data.index.isin(initial_data_with_correct_brackets.index)].sample(args.first_file_sample_size, random_state=42)
@@ -73,8 +73,8 @@ if args.first_file_sample_size is not None \
     second_file_data.to_pickle(args.second_output_data_path)
     third_file_data.to_pickle(args.third_output_data_path)
      
-elif args.first_file_sample_size is not None \
-    and args.second_output_data_path is not None \
+elif args.output_data_path is not None and args.first_file_sample_size is not None \
+    and args.second_output_data_path is not None and args.second_file_sample_size is None \
     and args.third_output_data_path is None:
     
     first_file_data = data[data.index.isin(initial_data_with_correct_brackets.index)].sample(args.first_file_sample_size, random_state=42)
@@ -83,8 +83,8 @@ elif args.first_file_sample_size is not None \
     first_file_data.to_pickle(args.output_data_path)
     second_file_data.to_pickle(args.second_output_data_path)
 
-elif args.first_file_sample_size is not None \
-    and args.second_output_data_path is None \
+elif args.output_data_path is not None and args.first_file_sample_size is None \
+    and args.second_output_data_path is None and args.second_file_sample_size is None \
     and args.third_output_data_path is None:
     
     data.to_pickle(args.output_data_path)
