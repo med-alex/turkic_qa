@@ -1,14 +1,19 @@
 #!/usr/bin/bash
 
-input_file_name=$1.pickle
-first_output_file_name=$2.pickle
+# input_file_name=$1.pickle
+# first_output_file_name=$2.pickle
+
+input_file_name=$1.json
+first_output_file_name=$2.json
 
 if [ ! -z $6 ]
 then
     first_file_sample_size=$3
-    second_output_file_name=$4.pickle
+    # second_output_file_name=$4.pickle
+    second_output_file_name=$4.json
     second_file_sample_size=$5    
-    third_output_file_name=$6.pickle
+    # third_output_file_name=$6.pickle
+    third_output_file_name=$6.json
 
     python /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.py \
         --input_data_path=/home/ml-srv-admin/Projects/turkic_qa/data/target_lagns/raw/$input_file_name \
@@ -22,7 +27,8 @@ then
 elif [ ! -z $4 ]
 then
     first_file_sample_size=$3
-    second_output_file_name=$4.pickle
+    # second_output_file_name=$4.pickle
+    second_output_file_name=$4.json
 
     python /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.py \
         --input_data_path=/home/ml-srv-admin/Projects/turkic_qa/data/target_lagns/raw/$input_file_name \

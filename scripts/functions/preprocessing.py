@@ -168,7 +168,7 @@ def deal_with_sevral_text_issues(data):
     return new_data
 
 
-def find_answer_from_translated_answer(context, answer):
+def find_answer_in_context_from_translated_answer(context, answer):
 
     len_translated_answer_nqram = len(answer.split())
 
@@ -204,7 +204,7 @@ def find_answer_from_translated_answer(context, answer):
     return context
 
 
-def find_answer_from_context(context, answer):
+def find_answer_in_context_from_context(context, answer):
     
     best_ratio = 0
     found_answer = ''
@@ -225,3 +225,14 @@ def find_answer_from_context(context, answer):
                 context = context.replace('[', '').replace(']', '')
     
     return context
+
+
+def answer_in_context_validation(context, answer, possible_answer):
+
+    match_ratio = SequenceMatcher(None,
+                            possible_answer,
+                            answer).ratio()
+    if match_ratio >= 0.5:
+        return context
+    else:
+        return find_answer_in_context_from_translated_answer(context.replace('[', '').replace(']', ''), answer)
