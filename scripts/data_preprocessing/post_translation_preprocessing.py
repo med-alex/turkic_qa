@@ -37,6 +37,7 @@ initial_data_with_any_brackets = data[data.context.str.contains('\[|\]')]
 initial_data_with_correct_brackets = data[[len(re.findall('\[', text)) == 1 and len(re.findall('\]', text)) == 1 for text in data.context]]
 initial_data_without_correct_brackets = data[[len(re.findall('\[', text)) != 1 or len(re.findall('\]', text)) != 1 for text in data.context]]
 
+data = data[[True if len(question.split()) <= 30 else False for question in data.question]]
 data.answer = data.answer.apply(lambda answer: answer[:-1] if answer[:-1] == '.' else answer)
 data['found_answer'] = data.context.apply(lambda context: re.findall('\[.+\]', context))
 data['found_left_brackets'] = data.context.apply(lambda context: re.findall('\[', context))
