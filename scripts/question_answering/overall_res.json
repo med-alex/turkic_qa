@@ -1,0 +1,10 @@
+{"model_name":"baseline_model (en to kaz)","xquad":[70.1,52.11],"sberquad":null,"mlqa":[69.43,51.46],"thquad":null,"fatmaqad":null,"squad":[71.29,52.0]}
+{"model_name":"baseline_model (en to uzn)","xquad":[70.57,52.11],"sberquad":null,"mlqa":[68.72,52.42],"thquad":null,"fatmaqad":null,"squad":[70.11,51.6]}
+{"model_name":"baseline_model (ru to kaz)","xquad":[73.19,56.84],"sberquad":[73.03,49.26],"mlqa":null,"thquad":null,"fatmaqad":null,"squad":null}
+{"model_name":"baseline_model (ru to uzn)","xquad":[70.75,50.53],"sberquad":[69.01,46.15],"mlqa":null,"thquad":null,"fatmaqad":null,"squad":null}
+{"model_name":"baseline_model (tr to kaz)","xquad":[68.68,50.0],"sberquad":null,"mlqa":null,"thquad":[71.69,48.39],"fatmaqad":[75.89,55.28],"squad":null}
+{"model_name":"baseline_model (tr to uzn)","xquad":[67.94,51.58],"sberquad":null,"mlqa":null,"thquad":[73.51,49.69],"fatmaqad":[73.46,51.76],"squad":null}
+{"model_name":"en_kaz_from_ft_on_squad2_model","xquad":[98.11,94.74],"sberquad":null,"mlqa":[74.35,59.19],"thquad":null,"fatmaqad":null,"squad":[73.67,57.53]}
+{"model_name":"en_kaz_regular_model","xquad":[99.34,97.37],"sberquad":null,"mlqa":[76.46,61.88],"thquad":null,"fatmaqad":null,"squad":[75.1,58.27]}
+{"model_name":"en_kaz_test_large_batch_model","xquad":[99.28,96.84],"sberquad":null,"mlqa":[76.51,61.66],"thquad":null,"fatmaqad":null,"squad":[75.14,59.53]}
+{"model_name":"en_kaz_test_large_batch_with_small_lr_model","xquad":[90.16,80.53],"sberquad":null,"mlqa":[76.66,62.11],"thquad":null,"fatmaqad":null,"squad":[75.54,59.6]}
