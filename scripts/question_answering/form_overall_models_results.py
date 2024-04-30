@@ -15,13 +15,16 @@ for dirname, _, filenames in os.walk(dir_path):
         model_source_lang = model_name.split('_')[0]
         model_target_lang = model_name.split('_')[1]
         model_dir = dirname
-        print(model_name)
+
         if model_name != 'baseline_model':
             for inside_dir_path, _, inside_filenames in os.walk(model_dir):
                 inside_dir = Path(inside_dir_path).stem
-                if inside_dir.split('_')[0] == model_source_lang and \
+                if (inside_dir.split('_')[0] == model_source_lang and \
                     inside_dir.split('_')[1] == model_target_lang and \
-                    inside_dir_path != model_dir:
+                    inside_dir_path != model_dir) \
+                    or (inside_dir.split('_')[0] == 'orig' and \
+                    inside_dir.split('_')[1] == model_target_lang and \
+                    inside_dir_path != model_dir):
                     
                     res_file_path = Path(inside_dir_path) / 'eval_results.json'
                     dataset_name = inside_dir.split('_')[-1]
@@ -45,7 +48,7 @@ for dirname, _, filenames in os.walk(dir_path):
             print(res_file_path)
             if os.path.isfile(res_file_path):
                 info = pd.read_json(res_file_path, lines=True, orient='records')
-                print(info)
+
                 for i in range(len(info.index)):
                     source_lang = info.iloc[i]['dataset'].split('_')[0]
                     target_lang = info.iloc[i]['dataset'].split('_')[1]
