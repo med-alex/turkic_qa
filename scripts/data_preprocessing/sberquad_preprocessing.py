@@ -28,7 +28,7 @@ if 'answers.text' not in data.columns and 'answer.start' not in data.columns:
 
 data = data.rename(columns={'answers.text': 'answer', 'answers.answer_start': 'answer_start'})
 
-data = prep.handle_json_quote_issue(data)
+data = prep.handle_quote_issue(data)
 for column in data.columns:
     data[column] = data[column].apply(lambda text: prep.change_square_brackets_on_reqular(text) if isinstance(text, str) else text)
 

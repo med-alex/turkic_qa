@@ -29,7 +29,7 @@ for source_lang in ['en', 'tr', 'ru']:
                         if file_source_lang == source_lang \
                             and file_target_lang == target_lang \
                             and file_split == split:
-                            # print(str(Path(args.input_dir_path) / filename))
+
                             merging_files_paths += [str(Path(args.input_dir_path) / filename)]
             
                 for file_path in merging_files_paths:
@@ -60,6 +60,6 @@ for source_lang in ['en', 'tr', 'ru']:
                             data_as_it_is = pd.read_json(str(Path(args.input_dir_path) / filename), orient='records', lines=True)
                             data_as_it_is = data_as_it_is.sample(frac=1)
                             data_as_it_is['id'] = data_as_it_is.index
-                            # print(str(Path(args.output_dir_path) / f'{source_lang}_{target_lang}_{split}_{dataset_name}.json'))
+
                             data_as_it_is.to_json(Path(args.output_dir_path) / f'{source_lang}_{target_lang}_{split}_{dataset_name}.json',
                                                     orient='records', lines=True, force_ascii=False)

@@ -40,7 +40,7 @@ full_data.question = full_data.question.apply(lambda question: f'{question.strip
 for column in ['context', 'answer']:
     full_data[column] = full_data[column].apply(lambda text: text.strip())
         
-full_data = prep.handle_json_quote_issue(full_data)
+full_data = prep.handle_quote_issue(full_data)
 full_data = prep.deal_with_sevral_text_issues(full_data)
 full_data = prep.get_data_with_spans(full_data, '[', ']')
 

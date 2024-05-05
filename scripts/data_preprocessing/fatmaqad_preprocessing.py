@@ -34,7 +34,7 @@ full_data = pd.DataFrame({'context': contexts,
                           'answer': answers, 
                           'answer_start': answer_starts})
 
-full_data = prep.handle_json_quote_issue(full_data)
+full_data = prep.handle_quote_issue(full_data)
 for column in full_data.columns:
     full_data[column] = full_data[column].apply(lambda text: prep.change_square_brackets_on_reqular(text) if isinstance(text, str) else text)
 full_data = prep.get_data_with_spans(full_data, '[', ']')

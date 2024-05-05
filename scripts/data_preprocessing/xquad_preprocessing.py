@@ -27,7 +27,7 @@ data['answer_start'] = data.answers.apply(lambda answers: \
 
 data = data.drop(columns=['answers'])
 
-data = prep.handle_json_quote_issue(data)
+data = prep.handle_quote_issue(data)
 for column in data.columns:
     data[column] = data[column].apply(lambda text: prep.change_square_brackets_on_reqular(text) if isinstance(text, str) else text)
 for i in data.index:

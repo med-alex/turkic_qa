@@ -33,8 +33,7 @@ def get_data_with_spans(data, span_left, span_right):
     return data
 
 
-
-def handle_json_quote_issue(data):
+def handle_quote_issue(data):
 
     for column in data.columns:
         data[column] = data[column].apply(lambda text: text.replace('"', "'") if isinstance(text, str) else text)
