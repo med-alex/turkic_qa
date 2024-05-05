@@ -1,0 +1,6 @@
+{"dataset":"en_kaz_test_mlqa","EM":47.87,"F1":64.68}
+{"dataset":"en_kaz_test_squad","EM":46.13,"F1":63.84}
+{"dataset":"en_kaz_test_xquad","EM":51.58,"F1":65.8}
+{"dataset":"orig_kaz_test_belebele","EM":31.37,"F1":40.81}
+{"dataset":"orig_kaz_test_kazqad","EM":33.28,"F1":48.1}
+{"dataset":"orig_kaz_test_sKQuAD","EM":49.4,"F1":71.62}

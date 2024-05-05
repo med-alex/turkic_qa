@@ -1,0 +1,155 @@
+{
+  "best_metric": 74.02729446919345,
+  "best_model_checkpoint": "/kaggle/working/en_kaz_model/checkpoint-4496",
+  "epoch": 5.0,
+  "eval_steps": 500,
+  "global_step": 5620,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 1.0,
+      "step": 1124,
+      "train_exact_match": 64.33566433566433,
+      "train_f1": 80.18683341791649,
+      "train_runtime": 59.0314,
+      "train_samples_per_second": 25.749,
+      "train_steps_per_second": 1.609
+    },
+    {
+      "epoch": 1.0,
+      "grad_norm": 43.318443298339844,
+      "learning_rate": 4e-05,
+      "loss": 1.5826,
+      "step": 1124
+    },
+    {
+      "epoch": 1.0,
+      "eval_exact_match": 54.162976085031,
+      "eval_f1": 70.32984011605946,
+      "eval_runtime": 128.4112,
+      "eval_samples_per_second": 25.753,
+      "eval_steps_per_second": 1.612,
+      "step": 1124
+    },
+    {
+      "epoch": 2.0,
+      "step": 2248,
+      "train_exact_match": 79.82017982017982,
+      "train_f1": 90.25474167756845,
+      "train_runtime": 57.538,
+      "train_samples_per_second": 25.792,
+      "train_steps_per_second": 1.616
+    },
+    {
+      "epoch": 2.0,
+      "grad_norm": 42.874534606933594,
+      "learning_rate": 3e-05,
+      "loss": 0.893,
+      "step": 2248
+    },
+    {
+      "epoch": 2.0,
+      "eval_exact_match": 56.59875996457042,
+      "eval_f1": 71.58727821782153,
+      "eval_runtime": 128.2951,
+      "eval_samples_per_second": 25.777,
+      "eval_steps_per_second": 1.613,
+      "step": 2248
+    },
+    {
+      "epoch": 3.0,
+      "step": 3372,
+      "train_exact_match": 89.5104895104895,
+      "train_f1": 95.6049982170853,
+      "train_runtime": 56.8135,
+      "train_samples_per_second": 25.663,
+      "train_steps_per_second": 1.619
+    },
+    {
+      "epoch": 3.0,
+      "grad_norm": 80.17811584472656,
+      "learning_rate": 2e-05,
+      "loss": 0.4985,
+      "step": 3372
+    },
+    {
+      "epoch": 3.0,
+      "eval_exact_match": 57.75022143489814,
+      "eval_f1": 73.15187193002522,
+      "eval_runtime": 128.2117,
+      "eval_samples_per_second": 25.793,
+      "eval_steps_per_second": 1.615,
+      "step": 3372
+    },
+    {
+      "epoch": 4.0,
+      "step": 4496,
+      "train_exact_match": 93.7062937062937,
+      "train_f1": 97.49945489057416,
+      "train_runtime": 56.8751,
+      "train_samples_per_second": 25.864,
+      "train_steps_per_second": 1.618
+    },
+    {
+      "epoch": 4.0,
+      "grad_norm": 7.416181564331055,
+      "learning_rate": 1e-05,
+      "loss": 0.2567,
+      "step": 4496
+    },
+    {
+      "epoch": 4.0,
+      "eval_exact_match": 57.75022143489814,
+      "eval_f1": 74.02729446919345,
+      "eval_runtime": 128.3711,
+      "eval_samples_per_second": 25.761,
+      "eval_steps_per_second": 1.613,
+      "step": 4496
+    },
+    {
+      "epoch": 5.0,
+      "step": 5620,
+      "train_exact_match": 96.7032967032967,
+      "train_f1": 98.61972346314087,
+      "train_runtime": 59.3876,
+      "train_samples_per_second": 25.662,
+      "train_steps_per_second": 1.616
+    },
+    {
+      "epoch": 5.0,
+      "grad_norm": 8.874896049499512,
+      "learning_rate": 0.0,
+      "loss": 0.1129,
+      "step": 5620
+    },
+    {
+      "epoch": 5.0,
+      "eval_exact_match": 58.14880425155005,
+      "eval_f1": 73.74300475324202,
+      "eval_runtime": 128.2411,
+      "eval_samples_per_second": 25.787,
+      "eval_steps_per_second": 1.614,
+      "step": 5620
+    },
+    {
+      "epoch": 5.0,
+      "step": 5620,
+      "total_flos": 4.173609222623232e+16,
+      "train_loss": 0.6687491080939133,
+      "train_runtime": 11227.2354,
+      "train_samples_per_second": 8.006,
+      "train_steps_per_second": 0.501
+    }
+  ],
+  "logging_steps": 500,
+  "max_steps": 5620,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 5,
+  "save_steps": 500,
+  "total_flos": 4.173609222623232e+16,
+  "train_batch_size": 16,
+  "trial_name": null,
+  "trial_params": null
+}

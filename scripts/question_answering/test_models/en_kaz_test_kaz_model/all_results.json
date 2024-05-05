@@ -1,0 +1,15 @@
+{
+    "epoch": 5.0,
+    "eval_exact_match": 21.423586880669923,
+    "eval_f1": 34.243536406197414,
+    "eval_runtime": 29.3996,
+    "eval_samples": 3252,
+    "eval_samples_per_second": 110.614,
+    "eval_steps_per_second": 3.98,
+    "total_flos": 6482516874462720.0,
+    "train_loss": 3.2934211585788846,
+    "train_runtime": 897.5227,
+    "train_samples": 13231,
+    "train_samples_per_second": 73.708,
+    "train_steps_per_second": 2.635
+}

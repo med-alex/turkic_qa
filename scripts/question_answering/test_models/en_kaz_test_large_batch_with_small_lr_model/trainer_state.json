@@ -1,0 +1,155 @@
+{
+  "best_metric": 75.95868566015479,
+  "best_model_checkpoint": "/root/turkic_qa/models/en_kaz_test_large_batch_with_small_lr_model/checkpoint-1686",
+  "epoch": 5.0,
+  "eval_steps": 500,
+  "global_step": 2810,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 1.0,
+      "step": 562,
+      "train_exact_match": 52.947052947052946,
+      "train_f1": 70.70067707829321,
+      "train_runtime": 23.4801,
+      "train_samples_per_second": 61.158,
+      "train_steps_per_second": 1.917
+    },
+    {
+      "epoch": 1.0,
+      "grad_norm": 45.37688446044922,
+      "learning_rate": 1e-05,
+      "loss": 3.0495,
+      "step": 562
+    },
+    {
+      "epoch": 1.0,
+      "eval_exact_match": 49.511514305652476,
+      "eval_f1": 66.89926148210125,
+      "eval_runtime": 73.134,
+      "eval_samples_per_second": 61.298,
+      "eval_steps_per_second": 1.928,
+      "step": 562
+    },
+    {
+      "epoch": 2.0,
+      "step": 1124,
+      "train_exact_match": 69.83016983016984,
+      "train_f1": 83.7246475849744,
+      "train_runtime": 25.3916,
+      "train_samples_per_second": 60.768,
+      "train_steps_per_second": 1.93
+    },
+    {
+      "epoch": 2.0,
+      "grad_norm": 43.2780647277832,
+      "learning_rate": 7.500000000000001e-06,
+      "loss": 1.1018,
+      "step": 1124
+    },
+    {
+      "epoch": 2.0,
+      "eval_exact_match": 58.47871598046057,
+      "eval_f1": 74.38078732494705,
+      "eval_runtime": 73.2844,
+      "eval_samples_per_second": 61.173,
+      "eval_steps_per_second": 1.924,
+      "step": 1124
+    },
+    {
+      "epoch": 3.0,
+      "step": 1686,
+      "train_exact_match": 74.42557442557442,
+      "train_f1": 87.08225061943374,
+      "train_runtime": 25.6473,
+      "train_samples_per_second": 60.435,
+      "train_steps_per_second": 1.911
+    },
+    {
+      "epoch": 3.0,
+      "grad_norm": 30.213491439819336,
+      "learning_rate": 5e-06,
+      "loss": 0.7563,
+      "step": 1686
+    },
+    {
+      "epoch": 3.0,
+      "eval_exact_match": 60.1884159106769,
+      "eval_f1": 75.95868566015479,
+      "eval_runtime": 73.6369,
+      "eval_samples_per_second": 60.88,
+      "eval_steps_per_second": 1.915,
+      "step": 1686
+    },
+    {
+      "epoch": 4.0,
+      "step": 2248,
+      "train_exact_match": 80.81918081918081,
+      "train_f1": 90.9191124663915,
+      "train_runtime": 25.2318,
+      "train_samples_per_second": 60.162,
+      "train_steps_per_second": 1.902
+    },
+    {
+      "epoch": 4.0,
+      "grad_norm": 46.035179138183594,
+      "learning_rate": 2.5e-06,
+      "loss": 0.5591,
+      "step": 2248
+    },
+    {
+      "epoch": 4.0,
+      "eval_exact_match": 59.769713886950456,
+      "eval_f1": 75.88125275809963,
+      "eval_runtime": 73.7614,
+      "eval_samples_per_second": 60.777,
+      "eval_steps_per_second": 1.912,
+      "step": 2248
+    },
+    {
+      "epoch": 5.0,
+      "step": 2810,
+      "train_exact_match": 84.41558441558442,
+      "train_f1": 93.0082849851576,
+      "train_runtime": 25.9923,
+      "train_samples_per_second": 60.326,
+      "train_steps_per_second": 1.885
+    },
+    {
+      "epoch": 5.0,
+      "grad_norm": 37.40110778808594,
+      "learning_rate": 0.0,
+      "loss": 0.4445,
+      "step": 2810
+    },
+    {
+      "epoch": 5.0,
+      "eval_exact_match": 60.29309141660851,
+      "eval_f1": 75.6964502841308,
+      "eval_runtime": 74.0937,
+      "eval_samples_per_second": 60.504,
+      "eval_steps_per_second": 1.903,
+      "step": 2810
+    },
+    {
+      "epoch": 5.0,
+      "step": 2810,
+      "total_flos": 4.173609222623232e+16,
+      "train_loss": 1.1822338823746108,
+      "train_runtime": 4028.4282,
+      "train_samples_per_second": 22.311,
+      "train_steps_per_second": 0.698
+    }
+  ],
+  "logging_steps": 500,
+  "max_steps": 2810,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 5,
+  "save_steps": 500,
+  "total_flos": 4.173609222623232e+16,
+  "train_batch_size": 32,
+  "trial_name": null,
+  "trial_params": null
+}

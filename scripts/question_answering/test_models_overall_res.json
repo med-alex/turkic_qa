@@ -1,0 +1,11 @@
+{"model_name":"en_kaz_from_ft_on_squad2_model","kazqad":"36.34, 52.77","mlqa":"60.65, 75.86","sKQuAD":"48.1, 74.23","squad":"58.53, 75.22","belebele":"24.51, 37.91","xquad":"96.84, 99.16"}
+{"model_name":"en_kaz_regular_model","kazqad":"34.8, 50.67","mlqa":"58.97, 73.93","sKQuAD":"49.8, 74.19","squad":"57.73, 73.89","belebele":"26.47, 41.07","xquad":"93.68, 97.76"}
+{"model_name":"en_kaz_test_base_model","kazqad":"32.36, 46.38","mlqa":"52.13, 66.46","sKQuAD":"44.6, 69.14","squad":"48.67, 64.82","belebele":"22.55, 32.5","xquad":"60.53, 78.09"}
+{"model_name":"en_kaz_test_base_squad_model","kazqad":"38.56, 52.78","mlqa":"57.4, 72.85","sKQuAD":"49.4, 73.97","squad":"54.13, 70.55","belebele":"23.53, 35.27","xquad":"81.05, 91.51"}
+{"model_name":"en_kaz_test_kaz_model","kazqad":"11.24, 21.85","mlqa":"24.22, 36.85","sKQuAD":"27.9, 50.98","squad":"21.8, 34.09","belebele":"9.8, 18.05","xquad":"31.05, 40.8"}
+{"model_name":"en_kaz_test_kaz_more_epoch_model","kazqad":"15.08, 25.55","mlqa":"30.61, 44.02","sKQuAD":"31.9, 55.2","squad":"27.47, 42.15","belebele":"11.76, 21.59","xquad":"83.16, 87.63"}
+{"model_name":"en_kaz_test_large_batch_model","kazqad":"37.41, 52.48","mlqa":"61.88, 76.17","sKQuAD":"49.2, 73.26","squad":"59.93, 75.26","belebele":"23.53, 38.69","xquad":"96.32, 99.11"}
+{"model_name":"en_kaz_test_large_batch_with_small_lr_model","kazqad":"38.52, 54.37","mlqa":"62.11, 76.57","sKQuAD":"51.3, 74.7","squad":"60.0, 75.85","belebele":"28.43, 42.79","xquad":"80.53, 89.81"}
+{"model_name":"en_kaz_test_large_lengh_and_stride_model","kazqad":"39.55, 54.63","mlqa":"63.68, 77.31","sKQuAD":"50.6, 74.31","squad":"60.0, 75.65","belebele":"30.39, 43.14","xquad":"84.74, 93.52"}
+{"model_name":"en_kaz_test_squad_lr_model","kazqad":"41.39, 57.68","mlqa":"65.81, 79.51","sKQuAD":"52.1, 76.23","squad":"62.87, 78.42","belebele":"37.25, 49.31","xquad":"93.68, 97.79"}
+{"model_name":"en_kaz_test_xlmv_model","kazqad":"33.69, 47.26","mlqa":"52.35, 68.25","sKQuAD":"46.0, 70.57","squad":"51.47, 67.78","belebele":"20.59, 31.95","xquad":"80.53, 90.02"}
