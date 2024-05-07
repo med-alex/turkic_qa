@@ -139,7 +139,7 @@ if three_files_condition:
     first_file_data = data.sample(args.first_file_sample_size, random_state=42)
     second_file_data = data[~data.index.isin(first_file_data.index)] \
                             .sample(args.second_file_sample_size, random_state=42)
-    third_file_data = data[~data.index.isin(second_file_data.index)]
+    third_file_data = data[~data.index.isin(first_file_data.index) & ~data.index.isin(second_file_data.index)]
 
     first_file_data.to_json(args.output_data_path,
                             orient='records', lines=True, force_ascii=False)

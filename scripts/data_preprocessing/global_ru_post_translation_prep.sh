@@ -18,7 +18,7 @@ bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_trans
 
 #sqaud train
 bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.sh \
-        sberquad_train_ru_18000_kaz_Cyrl sberquad_ru_kaz_val 2500 sberquad_ru_kaz_train
+        sberquad_train_ru_18000_kaz_Cyrl sberquad_ru_kaz_val 3000 sberquad_ru_kaz_train
 
 bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.sh \
-        sberquad_train_ru_18000_uzn_Latn sberquad_ru_uzn_val 2500 sberquad_ru_uzn_train
+        sberquad_train_ru_18000_uzn_Latn sberquad_ru_uzn_val 3000 sberquad_ru_uzn_train

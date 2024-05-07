@@ -11,10 +11,10 @@ bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_trans
 
 #squad val
 bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.sh \
-        squad_val_en_3500_kaz_Cyrl squad_en_kaz_test 1500 squad_en_kaz_val
+        squad_val_en_3500_kaz_Cyrl squad_en_kaz_val 1500 squad_en_kaz_test 
 
 bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.sh \
-        squad_val_en_3500_uzn_Latn squad_en_uzn_test 1500 squad_en_uzn_val
+        squad_val_en_3500_uzn_Latn squad_en_uzn_val 1500 squad_en_uzn_test
 
 #sqaud train
 bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.sh \
@@ -25,10 +25,10 @@ bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_trans
 
 #mlqa val
 bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.sh \
-        mlqa_val_en_kaz_Cyrl mlqa_en_kaz_val
+        mlqa_val_en_kaz_Cyrl mlqa_en_kaz_test
 
 bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.sh \
-        mlqa_val_en_uzn_Latn mlqa_en_uzn_val
+        mlqa_val_en_uzn_Latn mlqa_en_uzn_test
 
 #mlqa test
 bash /home/ml-srv-admin/Projects/turkic_qa/scripts/data_preprocessing/post_translation_preprocessing.sh \
