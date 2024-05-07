@@ -29,8 +29,7 @@ name_split = Path(args.input_data_path).stem.split('_')
 if (name_split[-1] != 'en' and name_split[-2] != 'en' and args.source_lang_tag == 'eng_Latn') \
     or (name_split[-1] != 'ru' and name_split[-2] != 'ru' and args.source_lang_tag == 'rus_Cyrl') \
     or (name_split[-1] != 'tr' and name_split[-2] != 'tr' and args.source_lang_tag == 'tur_Latn'):
-    raise ValueError(f"Specified source language: {args.source_lang_tag} \
-                        and sorce language dataset: {args.input_data_path} don't match")
+    raise ValueError(f"Specified source language: {args.source_lang_tag} and sorce language dataset: {args.input_data_path} don't match")
 
 for target_language_tag in args.target_langs_tags.split(','):
     for column in ['context', 'question', 'answer']:

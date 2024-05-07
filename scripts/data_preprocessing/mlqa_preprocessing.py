@@ -45,8 +45,7 @@ data = data[data.answer == answer_found_from_spans]
 if args.sample_size is not None and len(data.index) >= args.sample_size:
     data = data.sample(args.sample_size, random_state=42)
 elif args.sample_size is not None and len(data.index) < args.sample_size:
-    raise BaseException(f"Existing {len(data.index)} clean data rows \
-        is not enough to sample desired {args.sample_size} rows")
+    raise BaseException(f"Existing {len(data.index)} clean data rows is not enough to sample desired {args.sample_size} rows")
 
 data = prep.get_data_with_spans(data, '[', ']')
 
