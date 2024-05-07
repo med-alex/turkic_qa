@@ -160,7 +160,7 @@ def deal_with_sevral_text_issues(data):
                 text = get_rid_of_unnessesary_extra_spaces(text)
                 text = insert_nessesary_extra_spaces(text)
                 text = split_sentence(text)
-                text = get_rid_of_unnesesary_numbers_at_the_end(text)    
+                text = get_rid_of_unnesesary_numbers_at_the_end(text)
                 if column == 'context':
                     new_data.loc[i, 'answer_start'] = find_new_answer_start(new_data.loc[i],
                                                                             text)
@@ -172,12 +172,31 @@ def deal_with_sevral_text_issues(data):
 
 def find_answer_in_context_from_translated_answer(context, answer):
 
+    """
+    context: контекст
+    answer: переведенный ответ
+    
+    Поиск корректного ответа в контексте с помощью
+    переведенного ответа. Находится количество слов в 
+    переведенном ответе. Возможными ответами считаются 
+    последовательности слов в контексте длиной +- 2 слова и > 0.
+    Возможные ответы сравниваются с переведенным ответом.
+    Возможные ответы с наибольшим сходством считаются 
+    корректными ответами если сходство больше порогового уровня, 
+    и возможный ответ встречается в контексте лишь раз. 
+    Если две послеодвательности одинаково похожи 
+    на переведенный ответ, то приоритет у более короткой. 
+    Корректный ответ в контексте заключается в квадратные скобки, 
+    а контекст возвращается. Если условия выше не выполняются, 
+    то возвращается контекст без квадратных скобок.
+    """
+
     len_translated_answer_nqram = len(answer.split())
 
     possible_answers_ngrams_length = [len_translated_answer_nqram + i for i in range(-2,3) \
                                         if len_translated_answer_nqram + i > 0]
 
-    answers_by_ngrams = [[n_gram for n_gram in ngrams(context.split(), ngram_length)] \
+    answers_by_ngrams = [list(ngrams(context.split(), ngram_length)) \
                             for ngram_length in possible_answers_ngrams_length]
     possible_answers = [possible_answer for sub_list in answers_by_ngrams \
                         for possible_answer in sub_list]
@@ -214,6 +233,25 @@ def find_answer_in_context_from_translated_answer(context, answer):
 
 def find_answer_in_context_from_context(context, answer):
 
+    """
+    context: контекст
+    answer: переведенный ответ
+    
+    Выбор корректного ответа из контекста с помощью 
+    переведенного отдельно ответа. Разбивает контекст на части
+    по квадратным скобкам, каждая часть считается возможным ответом.
+    Сравнивает возможный ответ с переведенным. Возможные ответы
+    с наибольшим сходством считаются корректными ответами, 
+    если сходство больше порогового уровня, 
+    и возможный ответ встречается в контексте лишь раз. 
+    Либо возможный ответ является подстрокой переведенного ответа. 
+    Корректный ответ в контексте заключается в квадратные скобки,
+    а контекст возвращается. Если условия выше не выполняются,
+    то выполняется функция поиска ответа с помощью переведенного ответа, 
+    которая также возвращает контекст - либо со скобками и ответом, либо
+    без скобок, если ответ найти не удалось.
+    """
+
     best_ratio = 0
     found_answer = ''
     for context_part in re.split('\[', context):
@@ -228,6 +266,7 @@ def find_answer_in_context_from_context(context, answer):
                 found_answer = possible_answer
 
             if best_ratio >= 0.8 \
+                and possible_answer in answer and len(possible_answer) < 2 \
                 and len(re.findall(re.escape(found_answer),
                                     context.replace('[', '').replace(']', ''))) == 1:
                 context = insert_spans(context.replace('[', '').replace(']', ''),
@@ -235,18 +274,35 @@ def find_answer_in_context_from_context(context, answer):
                                        found_answer, '[', ']')
             else:
                 context = context.replace('[', '').replace(']', '')
+                context = find_answer_in_context_from_translated_answer(context,
+                                                                        answer)
 
     return context
 
 
 def answer_in_context_validation(context, answer, possible_answer):
 
+    """
+    context: контекст
+    answer: переведенный ответ
+    possible_answer: ответ из контекста
+    
+    С помощью SequenceMatcher проверяет, совпадает ли ответ из контекста 
+    с переведенным ответом, либо то, что возможный ответ из контекста это
+    подстрока переведенного ответа, и длина ответа из контекста при этом > 2. 
+    Если да, возвращает контекст с корректным ответом в скобках, 
+    если нет (что значит, что в контексте нет корректного ответа), 
+    то использует функцию поиска ответа с помощью переведенного ответа, 
+    которая также возвращает контекст - либо со скобками и ответом, либо
+    без скобок, если ответ найти не удалось.
+    """
+
     match_ratio = SequenceMatcher(None,
                                     possible_answer,
                                     answer).ratio()
-    if match_ratio >= 0.5:
-        return context
-    else:
+    if match_ratio < 0.5 and possible_answer in answer and len(possible_answer) < 2:
         context = context.replace('[', '').replace(']', '')
-        return find_answer_in_context_from_translated_answer(context,
-                                                             answer)
+        context = find_answer_in_context_from_translated_answer(context,
+                                                                answer)
+
+    return context
