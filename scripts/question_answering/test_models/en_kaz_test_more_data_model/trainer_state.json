@@ -1,0 +1,155 @@
+{
+  "best_metric": 76.02687328804589,
+  "best_model_checkpoint": "/root/turkic_qa/models/en_kaz_test_more_data_model/checkpoint-1977",
+  "epoch": 5.0,
+  "eval_steps": 500,
+  "global_step": 3295,
+  "is_hyper_param_search": false,
+  "is_local_process_zero": true,
+  "is_world_process_zero": true,
+  "log_history": [
+    {
+      "epoch": 1.0,
+      "step": 659,
+      "train_exact_match": 57.442557442557444,
+      "train_f1": 73.51870118230532,
+      "train_runtime": 26.7122,
+      "train_samples_per_second": 43.987,
+      "train_steps_per_second": 1.572
+    },
+    {
+      "epoch": 1.0,
+      "grad_norm": 39.7545051574707,
+      "learning_rate": 1e-05,
+      "loss": 3.2212,
+      "step": 659
+    },
+    {
+      "epoch": 1.0,
+      "eval_exact_match": 52.61100251326445,
+      "eval_f1": 69.5124848504818,
+      "eval_runtime": 96.9481,
+      "eval_samples_per_second": 44.044,
+      "eval_steps_per_second": 1.578,
+      "step": 659
+    },
+    {
+      "epoch": 2.0,
+      "step": 1318,
+      "train_exact_match": 69.63036963036963,
+      "train_f1": 85.00984196597565,
+      "train_runtime": 26.9805,
+      "train_samples_per_second": 43.735,
+      "train_steps_per_second": 1.594
+    },
+    {
+      "epoch": 2.0,
+      "grad_norm": 46.76236343383789,
+      "learning_rate": 7.500000000000001e-06,
+      "loss": 1.1531,
+      "step": 1318
+    },
+    {
+      "epoch": 2.0,
+      "eval_exact_match": 58.726612678022896,
+      "eval_f1": 74.78608906281214,
+      "eval_runtime": 98.2688,
+      "eval_samples_per_second": 43.452,
+      "eval_steps_per_second": 1.557,
+      "step": 1318
+    },
+    {
+      "epoch": 3.0,
+      "step": 1977,
+      "train_exact_match": 75.52447552447552,
+      "train_f1": 88.61617055577383,
+      "train_runtime": 27.168,
+      "train_samples_per_second": 43.433,
+      "train_steps_per_second": 1.583
+    },
+    {
+      "epoch": 3.0,
+      "grad_norm": 51.95179748535156,
+      "learning_rate": 5e-06,
+      "loss": 0.7717,
+      "step": 1977
+    },
+    {
+      "epoch": 3.0,
+      "eval_exact_match": 61.323652611002515,
+      "eval_f1": 76.02687328804589,
+      "eval_runtime": 97.5151,
+      "eval_samples_per_second": 43.788,
+      "eval_steps_per_second": 1.569,
+      "step": 1977
+    },
+    {
+      "epoch": 4.0,
+      "step": 2636,
+      "train_exact_match": 82.81718281718281,
+      "train_f1": 92.35723772390192,
+      "train_runtime": 27.7212,
+      "train_samples_per_second": 43.541,
+      "train_steps_per_second": 1.587
+    },
+    {
+      "epoch": 4.0,
+      "grad_norm": 34.79280471801758,
+      "learning_rate": 2.5e-06,
+      "loss": 0.5602,
+      "step": 2636
+    },
+    {
+      "epoch": 4.0,
+      "eval_exact_match": 60.87685004188774,
+      "eval_f1": 75.49715716414642,
+      "eval_runtime": 97.2826,
+      "eval_samples_per_second": 43.893,
+      "eval_steps_per_second": 1.573,
+      "step": 2636
+    },
+    {
+      "epoch": 5.0,
+      "step": 3295,
+      "train_exact_match": 84.31568431568432,
+      "train_f1": 93.1931213137538,
+      "train_runtime": 27.4516,
+      "train_samples_per_second": 43.75,
+      "train_steps_per_second": 1.566
+    },
+    {
+      "epoch": 5.0,
+      "grad_norm": 68.77067565917969,
+      "learning_rate": 0.0,
+      "loss": 0.4412,
+      "step": 3295
+    },
+    {
+      "epoch": 5.0,
+      "eval_exact_match": 60.65344875733035,
+      "eval_f1": 75.39931752741202,
+      "eval_runtime": 97.1196,
+      "eval_samples_per_second": 43.966,
+      "eval_steps_per_second": 1.575,
+      "step": 3295
+    },
+    {
+      "epoch": 5.0,
+      "step": 3295,
+      "total_flos": 6.424446706419456e+16,
+      "train_loss": 1.2294865378117887,
+      "train_runtime": 6072.5152,
+      "train_samples_per_second": 15.189,
+      "train_steps_per_second": 0.543
+    }
+  ],
+  "logging_steps": 500,
+  "max_steps": 3295,
+  "num_input_tokens_seen": 0,
+  "num_train_epochs": 5,
+  "save_steps": 500,
+  "total_flos": 6.424446706419456e+16,
+  "train_batch_size": 28,
+  "trial_name": null,
+  "trial_params": null
+}
