@@ -9,4 +9,3 @@ scripts/translation/translated_data/
 scripts/translation/translation.ipynb
 scripts/question_answering/else
 scripts/question_answering/training.ipynb
-scripts/question_answering/*_model
